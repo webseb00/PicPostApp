@@ -1,0 +1,6 @@
+export { default as Login } from './Login/Login'
+export { default as Home } from './Home/Home'
+export { default as SideBar } from './SideBar/SideBar'
+export { default as SearchBar } from './SearchBar/SearchBar'
+export { default as NotFoundPage } from './NotFoundPage/NotFoundPage'
+export { default as ProtectedRoute } from './ProtectedRoute/ProtectedRoute'

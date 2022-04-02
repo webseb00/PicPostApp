@@ -1,0 +1,28 @@
+.app__sidebar-link {
+  position: relative;
+}
+
+.app__sidebar-link::after {
+  content: '';
+  width: 2px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: #111827;
+  transition: all .3s;
+  transform: translateX(100%);
+}
+
+.app__sidebar-link:hover::after {
+  transform: translateX(0);
+}
+
+.app__sidebar-link.active {
+  color: #111827;
+}
+
+.app__sidebar-link.active::after {
+  transform: translateX(0);
+}

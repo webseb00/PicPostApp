@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* disabled scrollbars */
+.disable-scrollbar::-webkit-scrollbar {
+  background: transparent;
+  width: 0;
+}
+
+.disable-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+}
