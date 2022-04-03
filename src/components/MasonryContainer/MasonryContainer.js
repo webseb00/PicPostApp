@@ -1,5 +1,5 @@
 import Masonry from 'react-masonry-css'
-import { Pic } from '../index'
+import { PicPost } from '../index'
 import { BsEmojiFrown } from 'react-icons/bs'
 
 const breakpointColumnsObj = {
@@ -22,7 +22,7 @@ const MasonryContainer = ({ items }) => {
       breakpointCols={breakpointColumnsObj}
       className="my-masonry-grid flex gap-5"
     >
-      {items.map((item, index) => <Pic key={index} item={item} />)}
+      {items.map((item, index) => <PicPost key={index} item={item} />)}
     </Masonry>
   )
 }

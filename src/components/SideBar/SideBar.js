@@ -32,14 +32,13 @@ const SideBar = () => {
                 const { _id, slug, imageUrl, title } = cat;
                 return (
                   <Link 
-                    to={`/category/${slug.current}`}
-                    query={{ id: _id }}
+                    to={`category/${slug.current}`}
+                    state={{ id: _id }}
                     key={_id}
+                    className={`${styles['app__sidebar-link']} pl-4 text-l text-gray-400 font-semibold flex items-center transition duration-300 hover:text-gray-900`}
                   >
-                    <a className={`${styles['app__sidebar-link']} pl-4 text-l text-gray-400 font-semibold flex items-center transition duration-300 hover:text-gray-900`}>
-                      <img src={imageUrl} alt={title} className="w-10 h-10 mr-3.5 rounded-full" />
-                      {title}
-                    </a>
+                    <img src={imageUrl} alt={title} className="w-10 h-10 mr-3.5 rounded-full" />
+                    {title}
                   </Link>
                 )
               })
