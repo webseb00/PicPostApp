@@ -56,7 +56,7 @@ const PicPost = ({ item }) => {
           <img src={imageUrl} alt={title} className="rounded-lg" />
         </span>
       </Link>
-      <Link to={`user-profile/${author.googleID}`}>
+      <Link to={`/user-profile/${author.googleID}`}>
         <a className="flex items-center flex-start mt-2">
           <img src={author.image} alt={author.full_name} className="w-8 h-8 rounded-full" />
           <p className="ml-2 font-semibold text-l text-gray-500">

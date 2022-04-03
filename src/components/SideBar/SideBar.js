@@ -32,7 +32,7 @@ const SideBar = () => {
                 const { _id, slug, imageUrl, title } = cat;
                 return (
                   <Link 
-                    to={`category/${slug.current}`}
+                    to={`/category/${slug.current}`}
                     state={{ id: _id }}
                     key={_id}
                     className={`${styles['app__sidebar-link']} pl-4 text-l text-gray-400 font-semibold flex items-center transition duration-300 hover:text-gray-900`}
@@ -45,7 +45,7 @@ const SideBar = () => {
             }
           </div>
         </div>
-        <Link to={`user-profile/${googleId}`}>
+        <Link to={`/user-profile/${googleId}`}>
           <a className="flex justify-center">
             <div className="shadow-md hover:shadow-sm duration-300 flex items-center p-2 rounded-lg mt-5">
               <img src={imageUrl} alt={name} className="w-11 h-11 rounded-full" />

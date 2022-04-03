@@ -20,7 +20,7 @@ const Logout = () => {
   const onFailure = () => console.log('logout failed');
 
   const { signOut } = useGoogleLogout({
-    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
     onLogoutSuccess: onSuccess,
     onFailure: onFailure,
   });
