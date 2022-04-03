@@ -16,7 +16,10 @@ const PicsContainer = () => {
     // fetch pics based on given param
     setIsLoading(true);
       client.fetch(fetchMethod)
-      .then(res => setPics(res))
+      .then(res => {
+        setPics(res);
+        console.log(res);
+      })
       .catch(err => console.log(err.message));
     setIsLoading(false);    
   }, [params])

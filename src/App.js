@@ -7,6 +7,7 @@ import {
   Home, 
   PicsContainer,
   PicPostDetails, 
+  CreatePic,
   UserProfile,
   NotFoundPage, 
   ProtectedRoute 
@@ -21,7 +22,8 @@ function App() {
           <Route path="/category/:slug" element={<Home component={<PicsContainer />} />} />
         </Route>
         <Route path="/pic-post/:id" element={<Home component={<PicPostDetails />} searchBar={true} />}/>
-        <Route path="/user-profile/:id" exact element={<Home component={<UserProfile />} searchBar={false} />} /> 
+        <Route path="/user-profile/:id" element={<Home component={<UserProfile />} searchBar={false} />}/>
+        <Route path="/create-pic" element={<Home component={<CreatePic />} searchBar={false} />} /> 
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

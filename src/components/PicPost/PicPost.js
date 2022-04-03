@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { BsArrowUpRightCircleFill, BsSuitHeart, BsSuitHeartFill } from 'react-icons/bs';
+import { useState } from 'react';
+import { BsArrowUpRightCircleFill, BsTrash } from 'react-icons/bs';
 import { MdDownloadForOffline } from 'react-icons/md';
 import { nanoid } from 'nanoid';
 import { Link } from 'react-router-dom';
@@ -11,33 +11,23 @@ const PicPost = ({ item }) => {
   const { _id, title, imageUrl, link, author, save } = item;
   const { userGoogle: { googleId, sanityID } } = useStateContext();
 
-  const [picIsSaved, setPicIsSaved] = useState(false);
+  const deletePic = e => {
+    e.preventDefault();
 
-  const savePic = e => {
-    e.stopPropagation();
-
-    // if(picIsSaved) { 
-    //   client.patch(_id).unset([`save`, `save[_ref == "${sanityID}"]`]).commit().then(res => console.log(res))
-    //   setPicIsSaved(false);
-    // } else {
-    //   client
-    //   .patch(_id)
-    //   .setIfMissing({ save: [] })
-    //   .insert('after', 'save[-1]', [
-    //     { _key: nanoid(), _ref: sanityID }
-    //   ])
-    //   .commit()
-    //   .then(res => setPicIsSaved(true))
-    // }
+    client.delete(_id)
+      .then(() => window.location.reload())
+      .catch(err => console.log(err.message));
   }
 
   return (
     <div className="cursor-pointer mb-5">
       <Link to={`/pic-post/${_id}`}>
         <span className="relative shadow-md hover:shadow-xl duration-300 inline-block rounded-lg">
-        <a onClick={savePic} className="p-2 bg-gray-100 rounded-full absolute top-2 right-2 text-xl opacity-60 hover:opacity-100 duration-300">
-          {!picIsSaved ? <BsSuitHeart /> : <BsSuitHeartFill />}
-        </a>
+          {author._id === sanityID ? (
+            <a onClick={deletePic} className="p-2 bg-gray-100 rounded-full absolute top-2 right-2 text-xl opacity-60 hover:opacity-100 duration-300">
+              <BsTrash />
+            </a>
+          ) : ''}
           <a 
             href={imageUrl} 
             target="_blank"
