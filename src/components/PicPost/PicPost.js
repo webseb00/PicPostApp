@@ -14,8 +14,11 @@ const PicPost = ({ item }) => {
   const deletePic = e => {
     e.preventDefault();
 
-    client.delete(_id)
-      .then(() => window.location.reload())
+    client
+      .delete(_id)
+      .then(() => {
+        window.location.reload();
+      })
       .catch(err => console.log(err.message));
   }
 
@@ -24,35 +27,33 @@ const PicPost = ({ item }) => {
       <Link to={`/pic-post/${_id}`}>
         <span className="relative shadow-md hover:shadow-xl duration-300 inline-block rounded-lg">
           {author._id === sanityID ? (
-            <a onClick={deletePic} className="p-2 bg-gray-100 rounded-full absolute top-2 right-2 text-xl opacity-60 hover:opacity-100 duration-300">
+            <span onClick={deletePic} className="p-2 bg-gray-100 rounded-full absolute top-2 right-2 text-xl opacity-60 hover:opacity-100 duration-300">
               <BsTrash />
-            </a>
+            </span>
           ) : ''}
-          <a 
+          <span 
             href={imageUrl} 
             target="_blank"
             onClick={e => e.stopPropagation()}
             className="absolute top-2 left-2 shadow-md bg-gray-100 p-2 rounded-full text-xl opacity-60 hover:opacity-100 duration-300"
           >
             <MdDownloadForOffline />
-          </a>
-          <a
+          </span>
+          <span
             onClick={e => e.stopPropagation()} 
             href={link} 
             className="absolute left-2 bottom-2 shadow-md bg-gray-100 p-2 rounded-full text-xl opacity-60 hover:opacity-100 duration-300"
           >
             <BsArrowUpRightCircleFill />
-          </a>
+          </span>
           <img src={imageUrl} alt={title} className="rounded-lg" />
         </span>
       </Link>
-      <Link to={`/user-profile/${author.googleID}`}>
-        <a className="flex items-center flex-start mt-2">
-          <img src={author.image} alt={author.full_name} className="w-8 h-8 rounded-full" />
-          <p className="ml-2 font-semibold text-l text-gray-500">
-            {author.full_name}
-          </p>
-        </a>
+      <Link to={`/user-profile/${author.googleID}`} className="flex items-center flex-start mt-2">
+        <img src={author.image} alt={author.full_name} className="w-8 h-8 rounded-full" />
+        <p className="ml-2 font-semibold text-l text-gray-500">
+          {author.full_name}
+        </p>
       </Link>
     </div>
   )

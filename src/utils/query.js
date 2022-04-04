@@ -29,6 +29,6 @@ export const fetchSavedPicsByUser = param => {
 }
 
 export const fetchPicDetailsQuery = param => {
-  const query = `*[_type == 'pinpost' && _id == '${param}']{ _id, title, link, description, 'category_slug': categories->slug.current, 'category_id': categories->_id ,author->, 'imageUrl': image.asset->url }`;
+  const query = `*[_type == 'pinpost' && _id == '${param}']{ _id, title, link, description, 'category_slug': categories->slug.current, 'category_id': categories->_id ,author->, 'imageUrl': image.asset->url, comments }`;
   return query;
 }

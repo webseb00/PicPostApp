@@ -26,26 +26,20 @@ const UserProfile = () => {
       .then(data => setBackgroundUrl(data.urls.regular))
   }, []);
 
-  useEffect(() => {
-    // fetch pics CREATED by the user
+  const fetchUserProfilePics = async () => {
     if(userProfile?._id) {
       if(active === 'created') {
-        client.fetch(fetchPicsByUserID(userProfile._id))
-          .then(res => {
-            console.log(res);
-            setItems(res);
-          })
-          .catch(err => console.log(err.message));
+        const data = await client.fetch(fetchPicsByUserID(userProfile._id));
+        setItems(data);
       } else {
-        //fetch pics SAVED by the user
-        client.fetch(fetchSavedPicsByUser(userProfile._id))
-          .then(res => {
-            console.log(res);
-            setItems(res);
-          })
-          .catch(err => console.log(err.message));
+        const data = await client.fetch(fetchSavedPicsByUser(userProfile._id));
+        setItems(data);
       }
     }
+  }
+
+  useEffect(() => {
+    fetchUserProfilePics();
   }, [active, userProfile]);
 
   if(!userProfile || !items) return <Loader />;

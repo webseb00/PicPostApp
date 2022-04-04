@@ -1,15 +1,12 @@
+import { useState, useEffect } from 'react'
 import { Navigate, useLocation, Outlet } from "react-router-dom";
 
-const ProtectedRoute = () => {
+
+
+const ProtectedRoute = ({ user }) => {
 
   const location = useLocation();
-  const profileObj = JSON.parse(localStorage.getItem('profileObj'));
-
-  if(!profileObj || !profileObj?.sanityID) {
-    return <Navigate to="/login" state={{ from: location }}  />;
-  }
-  
-  return <Outlet />
+  return user ? <Outlet /> : (<Navigate to="/login" replace state={{ from: location }}  />);
 }
 
 export default ProtectedRoute

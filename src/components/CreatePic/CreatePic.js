@@ -93,7 +93,7 @@ const CreatePic = () => {
       }
   
       client.create(doc)
-        .then(res => window.location.reload())
+        .then(() => window.location.reload())
         .catch(err => console.log(`Upload Pic post failed: ${err.message}`));
     } else {
       setEmptyFields(true);

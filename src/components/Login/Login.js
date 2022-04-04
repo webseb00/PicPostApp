@@ -35,14 +35,14 @@ const Login = () => {
         if(!user.length) {
           client.create(doc).then((res) => {
             localStorage.setItem('profileObj', JSON.stringify({ ...profileObj, sanityID: res._id }));
+            getInitialData();
           });
         }
         localStorage.setItem('profileObj', JSON.stringify({ ...profileObj, sanityID: user[0]._id }));
+        getInitialData();
       })
       .catch(err => console.log(err.message));
 
-      console.log('text')
-      getInitialData();
       navigate('/');
   }
 

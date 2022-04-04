@@ -52,6 +52,55 @@ export default {
         type: 'reference',
         to: [{ type: 'user' }]  
       }]
+    },
+    {
+      name: 'comments',
+      title: 'Comments',
+      type: 'array',
+      of: [{ 
+        type: 'object',
+        fields: [
+          {
+            title: 'Comment',
+            name: 'comment',
+            type: 'string'
+          },
+          {
+            title: 'Publishing date',
+            name: 'publishedAt',
+            type: 'datetime',
+            initialValue: (new Date()).toISOString()
+          },
+          {
+            title: 'Author',
+            name: 'author',
+            type: 'document',
+            fields: [
+              {
+                title: 'Full name',
+                name: 'full_name',
+                type: 'string',
+              }, 
+              {
+                title: 'Image',
+                name: 'image',
+                type: 'url'
+              },
+              {
+                name: 'author_ref',
+                title: 'Author Reference',
+                type: 'reference',
+                to: [{ type: 'user' }]
+              }, 
+              {
+                name: 'googleID',
+                title: 'Google ID',
+                type: 'string'
+              }
+            ]
+          }
+        ]
+      }]
     }
   ]
 }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Routes,
   Route,
@@ -12,12 +13,18 @@ import {
   NotFoundPage, 
   ProtectedRoute 
 } from './components/index'
+import { useStateContext } from "./context";
+
+const initProfileObj = () => JSON.parse(localStorage.getItem('profileObj'));
 
 function App() {
+
+  const { userGoogle: { sanityID } } = useStateContext();
+
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route element={<ProtectedRoute />}>
+      <Route element={sanityID && <ProtectedRoute user={sanityID} />}>
         <Route path="/" element={<Home component={<PicsContainer />} searchBar={true} />}>
           <Route path="/category/:slug" element={<Home component={<PicsContainer />} />} />
         </Route>

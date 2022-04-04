@@ -29,15 +29,11 @@ const SearchBar = () => {
         </div>
       </div>
       <div className="flex justify-between gap-3">
-        <Link to={`/user-profile/${googleId}`}>
-          <a className="w-12 h-12 inline-block hover:shadow-md duration-300">
-            <img src={imageUrl} alt={name} className="rounded-lg" />
-          </a>
+        <Link to={`/user-profile/${googleId}`} className="w-12 h-12 inline-block hover:shadow-md duration-300">
+          <img src={imageUrl} alt={name} className="rounded-lg" />
         </Link>
-        <Link to="/create-pic">
-          <a className="w-12 h-12 rounded-lg inline-block bg-slate-900 flex items-center justify-center hover:shadow-md duration-300">
-            <BsPlus className="text-white text-2xl" />
-          </a>
+        <Link to="/create-pic" className="w-12 h-12 rounded-lg inline-block bg-slate-900 flex items-center justify-center hover:shadow-md duration-300">
+          <BsPlus className="text-white text-2xl" />
         </Link>
       </div>
     </div>
