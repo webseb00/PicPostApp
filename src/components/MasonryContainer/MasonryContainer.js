@@ -5,8 +5,8 @@ import { BsEmojiFrown } from 'react-icons/bs'
 const breakpointColumnsObj = {
   default: 5,
   1200: 4,
-  900: 3,
-  700: 2,
+  992: 3,
+  768: 2,
   500: 1,
 };
 

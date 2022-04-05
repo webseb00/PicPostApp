@@ -58,11 +58,11 @@ const PicPostDetails = () => {
 
   return (
     <div className="p-3 my-3 flex justify-center">
-      <div className="w-11/12 flex bg-white rounded-2xl max-w-screen-xl">
-        <div className="w-2/5">
+      <div className="w-10/12 flex flex-col md:w-8/12 lg:w-10/12 lg:flex-row bg-white rounded-2xl max-w-screen-xl">
+        <div className="w-full lg:w-2/5">
           <img src={pic.imageUrl} alt={pic.title} className="rounded-2xl object-cover" />
         </div>
-        <div className="w-3/5 p-4">
+        <div className="w-full lg:w-3/5 p-4">
           <div className="flex justify-between">
             <a 
               href={pic.imageUrl} 
@@ -111,14 +111,14 @@ const PicPostDetails = () => {
                 )
               })}
             </ul>}
-            <form onSubmit={handleSubmit} className="flex mt-6">
+            <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center mt-6">
               <img src={imageUrl} className="w-11 h-11 rounded-full" alt="avatar" />
               <input 
                 type="text" 
                 value={inputComment}
                 onChange={handleChange}
                 placeholder="Add your comment here..." 
-                className="border border-gray-300 rounded-lg p-2 flex-1 text-center mx-3"
+                className="border border-gray-300 rounded-lg p-2 flex-1 text-center mx-3 my-3 w-full"
                 required 
               />
               <button 

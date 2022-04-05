@@ -21,7 +21,7 @@ const UserProfile = () => {
     client.fetch(fetchUserQuery(id))
       .then(res => setUserProfile(...res));
 
-    fetch(`https://api.unsplash.com/photos/random/?client_id=${process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY}`)
+    fetch(`https://api.unsplash.com/photos/random?query=landscape,nature,mountain&client_id=${process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY}`)
       .then(res => res.json())
       .then(data => setBackgroundUrl(data.urls.regular))
   }, []);

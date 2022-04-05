@@ -4,25 +4,23 @@
 
 .app__sidebar-link::after {
   content: '';
-  width: 2px;
+  width: 3px;
   display: inline-block;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  background: #111827;
+  background-color: rgb(239 68 68);
   transition: all .3s;
   transform: translateX(100%);
 }
 
-.app__sidebar-link:hover::after {
+.app__sidebar-link:hover::after,
+.app__sidebar-link--active::after {
   transform: translateX(0);
 }
 
-.app__sidebar-link.active {
+.app__sidebar-link--active {
   color: #111827;
-}
-
-.app__sidebar-link.active::after {
-  transform: translateX(0);
+  background-color: rgb(241 245 249);
 }
