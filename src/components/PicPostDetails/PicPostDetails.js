@@ -86,7 +86,7 @@ const PicPostDetails = () => {
           </div>
           <div className="py-2 border-t">
             <h2 className="text-2xl font-semibold mb-4">Comments:</h2>
-            {!comments.length ? 
+            {!comments?.length ? 
             <h4 className="text-lg my-4">No comments found...</h4> : 
             <ul className="mb-4 rounded-lg divide-y divide-gray-300 max-h-40 overflow-y-auto">
               {comments?.length && comments.map(el => {
