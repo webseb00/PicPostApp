@@ -4,7 +4,6 @@ import { Logout, MasonryContainer } from "../index";
 import { client } from '../../utils/client';
 import { fetchPicsByUserID, fetchSavedPicsByUser, fetchUserQuery } from '../../utils/query';
 import { Loader } from '../../components/index';
-import { useStateContext } from '../../context';
 
 const UserProfile = () => {
 
@@ -15,7 +14,6 @@ const UserProfile = () => {
   const [backgroundUrl, setBackgroundUrl] = useState('');
 
   const [userProfile, setUserProfile] = useState(null);
-
 
   useEffect(() => {
     client.fetch(fetchUserQuery(id))
@@ -28,6 +26,7 @@ const UserProfile = () => {
 
   const fetchUserProfilePics = async () => {
     if(userProfile?._id) {
+      setItems(null);
       if(active === 'created') {
         const data = await client.fetch(fetchPicsByUserID(userProfile._id));
         setItems(data);

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { BsArrowUpRightCircleFill, BsTrash } from 'react-icons/bs';
+import { useState, useEffect } from 'react';
+import { BsArrowUpRightCircleFill, BsTrash, BsHeartFill, BsHeart } from 'react-icons/bs';
 import { MdDownloadForOffline } from 'react-icons/md';
 import { nanoid } from 'nanoid';
 import { Link } from 'react-router-dom';
@@ -9,16 +9,43 @@ import { useStateContext } from '../../context';
 const PicPost = ({ item }) => {
 
   const { _id, title, imageUrl, link, author, save } = item;
-  const { userGoogle: { googleId, sanityID } } = useStateContext();
+  const { userGoogle: { sanityID } } = useStateContext();
+
+  const [savedPicture, setSavedPicture] = useState(false);
+
+  useEffect(() => {
+    const checkIfSaved = save?.filter(el => el._ref === sanityID);
+    if(checkIfSaved?.length) setSavedPicture(true);
+
+  }, [item]);
+
+  const savePic = (e, picID) => {
+    e.preventDefault();
+
+    const findPic = save?.filter(el => el._ref === sanityID);
+
+    if(findPic?.length) {
+      client
+        .patch(_id)
+        .unset([`save[_ref=="${sanityID}"]`])
+        .commit()
+        .then(() => setSavedPicture(false))
+    } else {
+      client
+        .patch(picID)
+        .setIfMissing({ save: [] })
+        .insert('after', 'save[-1]', [{ _key: nanoid(), _ref: sanityID }])
+        .commit()
+        .then(() => setSavedPicture(true))
+    }
+  }
 
   const deletePic = e => {
     e.preventDefault();
 
     client
       .delete(_id)
-      .then(() => {
-        window.location.reload();
-      })
+      .then(() => window.location.reload())
       .catch(err => console.log(err.message));
   }
 
@@ -31,21 +58,28 @@ const PicPost = ({ item }) => {
               <BsTrash />
             </span>
           ) : ''}
-          <span 
+          <a 
             href={imageUrl} 
             target="_blank"
             onClick={e => e.stopPropagation()}
             className="absolute top-2 left-2 shadow-md bg-gray-100 p-2 rounded-full text-xl opacity-60 hover:opacity-100 duration-300"
           >
             <MdDownloadForOffline />
-          </span>
-          <span
+          </a>
+          <a
             onClick={e => e.stopPropagation()} 
             href={link} 
             className="absolute left-2 bottom-2 shadow-md bg-gray-100 p-2 rounded-full text-xl opacity-60 hover:opacity-100 duration-300"
           >
             <BsArrowUpRightCircleFill />
-          </span>
+          </a>
+          <button 
+            type="button" 
+            className="absolute right-2 bottom-2 text-2xl border rounded-full p-2 bg-gray-100 opacity-60 hover:opacity-100 duration-300"
+            onClick={e => savePic(e, _id)}
+          >
+            {!savedPicture ? <BsHeart className="text-red-500" /> : <BsHeartFill className="text-red-500" />}
+          </button>
           <img src={imageUrl} alt={title} className="rounded-lg" />
         </span>
       </Link>
