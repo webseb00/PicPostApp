@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 import {
   Routes,
   Route,
@@ -18,10 +18,16 @@ import { useStateContext } from "./context";
 function App() {
   const { userGoogle: { sanityID } } = useStateContext();
 
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    if(sanityID) setIsLogin(true);
+  }, [sanityID]);
+
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route element={sanityID && <ProtectedRoute user={sanityID} />}>
+      <Route element={isLogin && <ProtectedRoute user={sanityID} />}>
         <Route path="/" element={<Home component={<PicsContainer />} searchBar={true} />}>
           <Route path="/category/:slug" element={<Home component={<PicsContainer />} />} />
         </Route>
