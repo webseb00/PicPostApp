@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { MdDownloadForOffline, MdOutlineHighlightOff } from 'react-icons/md';
+import { RiLoader4Fill } from 'react-icons/ri';
 import { client } from '../../utils/client';
 import { fetchPicDetailsQuery } from '../../utils/query';
 import { Loader } from '../index';
 import { Link, useParams } from 'react-router-dom';
 import { useStateContext } from '../../context';
+import { toast } from 'react-toastify';
 
 const PicPostDetails = () => {
 
@@ -14,6 +16,8 @@ const PicPostDetails = () => {
   const [comments, setComments] = useState([]);
   const [inputComment, setInputComment] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const toastInfo = msg => toast.info(msg);
 
   const { userGoogle: { sanityID, imageUrl, name, googleId } } = useStateContext();
 
@@ -31,6 +35,8 @@ const PicPostDetails = () => {
     e.preventDefault();
 
     if(inputComment) {
+      setLoading(true);
+
       client
       .patch(pic._id)
       .setIfMissing({ comments: [] })
@@ -38,9 +44,17 @@ const PicPostDetails = () => {
                                           author: { author_ref: { _type: 'reference', _ref: sanityID }, full_name: name, image: imageUrl, googleID: googleId } }])
       .commit({
         autoGenerateArrayKeys: true,
-      }).then(res => setComments(res.comments));
+      }).then(res => {
+        setComments(res.comments);
+        setInputComment('');
+        toastInfo('Your comment has been added!')
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log(err.message);
+        setLoading(false);
+      })
     }
-    setInputComment('');
   }
 
   const handleDeleteComment = async commentID => {
@@ -88,18 +102,21 @@ const PicPostDetails = () => {
             <h2 className="text-2xl font-semibold mb-4">Comments:</h2>
             {!comments?.length ? 
             <h4 className="text-lg my-4">No comments found...</h4> : 
-            <ul className="mb-4 rounded-lg divide-y divide-gray-300 max-h-40 overflow-y-auto">
+            <ul className="mb-4 rounded-lg divide-y divide-gray-300 max-h-40 overflow-y-auto disable-scrollbar">
               {comments?.length && comments.map(el => {
                 const { _key, comment, author: { googleID, image, full_name } } = el;
                 return (
                   <li key={_key} className="flex flex-1 py-2 mb-2 items-center relative">
-                    <button 
-                      type="button" 
-                      onClick={() => handleDeleteComment(_key)}
-                      className="absolute top-2 right-2"
-                    >
-                      <MdOutlineHighlightOff className="text-2xl text-red-500 opacity-60 hover:opacity-100 duration-300" />
-                    </button>
+                    {googleID === googleId ? 
+                      <button 
+                        type="button" 
+                        onClick={() => handleDeleteComment(_key)}
+                        className="absolute top-2 right-2"
+                      >
+                        <MdOutlineHighlightOff className="text-2xl text-red-500 opacity-60 hover:opacity-100 duration-300" />
+                      </button>
+                      : ''
+                    }
                     <a href={`/user-profile/${googleID}`}>
                       <img src={image} className="w-11 h-11 rounded-full" alt="avatar" />
                     </a>
@@ -123,14 +140,20 @@ const PicPostDetails = () => {
               />
               <button 
                 type="submit" 
-                className="rounded-lg shadow-md outline-none border-2 border-solid border-sky-600 bg-sky-600 duration-300 cursor-pointer text-white py-2 px-6 text-md hover:bg-transparent hover:text-sky-600 font-semibold">
-                Submit
+                disabled={loading}
+                className="rounded-lg shadow-md outline-none border-2 border-solid border-sky-600 bg-sky-600 duration-300 cursor-pointer text-white py-2 px-6 text-md hover:bg-transparent hover:text-sky-600 font-semibold flex items-center">
+                  {loading ? 
+                    <>
+                      <RiLoader4Fill className="animate-spin mr-2 text-2xl" />
+                      Sending...
+                    </>
+                    :
+                    <p>Submit</p>}
               </button>
             </form>
           </div>
         </div>
       </div>
-      <div></div>
     </div>
   )
 }

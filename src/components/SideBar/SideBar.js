@@ -56,7 +56,7 @@ const SideBar = ({ sidebar }) => {
           <Link to={`/user-profile/${googleId}`} className="flex justify-center">
             <div className="shadow-md hover:shadow-sm duration-300 flex justify-between items-center p-2 pl-4 mt-3 w-full border-t border-b bg-gray-50">
               <img src={imageUrl} alt={name} className="w-11 h-11 rounded-full" />
-              <h4 className="mx-3 font-semibold">{name}</h4>
+              <h4 className="mx-3 font-semibold leading-[20px]">{name}</h4>
               <BsArrowBarRight className="text-red-500 text-3xl" />
             </div>
           </Link>

@@ -32,7 +32,7 @@ const SearchBar = () => {
         <Link to={`/user-profile/${googleId}`} className="w-12 h-12 inline-block hover:shadow-md duration-300">
           <img src={imageUrl} alt={name} className="rounded-lg" />
         </Link>
-        <Link to="/create-pic" className="w-12 h-12 rounded-lg inline-block bg-slate-900 flex items-center justify-center hover:shadow-md duration-300">
+        <Link to="/create-pic" className="w-12 h-12 rounded-lg inline-block bg-sky-600 flex items-center justify-center hover:shadow-md duration-300">
           <BsPlus className="text-white text-2xl" />
         </Link>
       </div>

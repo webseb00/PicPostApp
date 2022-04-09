@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { BsCloudUpload, BsTrash } from 'react-icons/bs'
+import { RiLoader4Fill } from 'react-icons/ri'
 import { client } from '../../utils/client';
 import { fetchCategoriesQuery, fetchUserQuery } from '../../utils/query';
 import { ThreeDots } from 'react-loader-spinner';
@@ -13,7 +14,8 @@ const CreatePic = () => {
   const [wrongImageType, setWrongImageType] = useState(false);
   const [emptyFields, setEmptyFields] = useState(false);
   const [loading, setLoading] = useState(false);
-  
+  const [sending, setSending] = useState(false);
+
   const [picDetails, setPicDetails] = useState({
     title: '',
     description: '',
@@ -69,6 +71,7 @@ const CreatePic = () => {
 
     if(title && description && category && link) {
       setEmptyFields(false);
+      setSending(true);
 
       const doc = {
         _type: 'pinpost',
@@ -93,18 +96,25 @@ const CreatePic = () => {
       }
   
       client.create(doc)
-        .then(() => window.location.reload())
-        .catch(err => console.log(`Upload Pic post failed: ${err.message}`));
+        .then(() => {
+          setSending(false);
+          navigate('/');
+        })
+        .catch(err => {
+          setSending(false);
+          setPicDetails({ title: '', description: '', category: '', link: '' });
+          console.log(`Upload Pic post failed: ${err.message}`);
+        });
     } else {
       setEmptyFields(true);
     }
   }
 
   return (
-    <div className="flex justify-center overflow-y-scroll disable-scrollbar"> 
-    <div className="w-4/5">
-      <div className="flex bg-white rounded-lg shadow-md p-4 my-7 items-center">
-        <div className="basis-2/5 bg-slate-200 cursor-pointer p-3 h-full">
+    <div className="h-screen flex items-center justify-center overflow-y-scroll disable-scrollbar"> 
+    <div className="w-4/5 sm:w-3/5 md:w-4/5">
+      <div className="flex flex-col md:flex-row bg-white rounded-lg shadow-md p-4 my-7 items-center">
+        <div className="basis-4/5 md:basis-2/5 bg-slate-200 cursor-pointer p-3 h-full">
           <div className="h-96">
             <label htmlFor={`${imageAsset?._id ? '' : 'myPic'}`} className="relative flex flex-col h-full border-2 border-dotted border-slate-400 p-3 block">
               {imageAsset && 
@@ -143,7 +153,7 @@ const CreatePic = () => {
             </label>
           </div>
         </div>
-        <div className="basis-3/5 flex flex-col justify-center gap-7 p-3">
+        <div className="w-full md:basis-4/5 flex flex-col justify-center gap-7 p-3">
         {emptyFields && <p className="text-center text-red-500 font-semibold">Please fill required fields!</p>}
           <div>
             <input 
@@ -188,11 +198,17 @@ const CreatePic = () => {
           <div className="flex justify-end">
             <button 
               type="button"
-              className="rounded-full shadow-md outline-none border-2 border-solid border-sky-600 bg-sky-600 duration-300 cursor-pointer text-white py-2 px-8 text-md hover:bg-transparent hover:text-sky-600 font-semibold"
-              onClick={savePicPost}
-            >
-              Save Pic                       
-            </button> 
+              onClick={savePicPost} 
+              disabled={sending}
+              className="rounded-lg shadow-md outline-none border-2 border-solid border-sky-600 bg-sky-600 duration-300 cursor-pointer text-white py-2 px-6 text-md hover:bg-transparent hover:text-sky-600 font-semibold flex items-center">
+                {sending ? 
+                <>
+                  <RiLoader4Fill className="animate-spin mr-2 text-2xl" />
+                  Sending...
+                </>
+                :
+                <p>Add pic</p>}
+            </button>
           </div>
         </div>
       </div>

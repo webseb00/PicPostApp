@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 import { Link } from 'react-router-dom';
 import { client } from '../../utils/client';
 import { useStateContext } from '../../context';
+import { toast } from 'react-toastify';
 
 const PicPost = ({ item }) => {
 
@@ -13,10 +14,11 @@ const PicPost = ({ item }) => {
 
   const [savedPicture, setSavedPicture] = useState(false);
 
+  const toastSuccess = msg => toast.success(msg);
+
   useEffect(() => {
     const checkIfSaved = save?.filter(el => el._ref === sanityID);
     if(checkIfSaved?.length) setSavedPicture(true);
-
   }, [item]);
 
   const savePic = (e, picID) => {
@@ -29,20 +31,25 @@ const PicPost = ({ item }) => {
         .patch(_id)
         .unset([`save[_ref=="${sanityID}"]`])
         .commit()
-        .then(() => setSavedPicture(false))
+        .then(() => {
+          setSavedPicture(false);
+          toastSuccess('Post has been unsaved!');
+        })
     } else {
       client
         .patch(picID)
         .setIfMissing({ save: [] })
         .insert('after', 'save[-1]', [{ _key: nanoid(), _ref: sanityID }])
         .commit()
-        .then(() => setSavedPicture(true))
+        .then(() => {
+          setSavedPicture(true);
+          toastSuccess('Post has been saved!');
+        });
     }
   }
 
   const deletePic = e => {
     e.preventDefault();
-
     client
       .delete(_id)
       .then(() => window.location.reload())

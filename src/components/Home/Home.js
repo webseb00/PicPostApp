@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SideBar, SearchBar } from '../index'
+import { SideBar, SearchBar, Toast } from '../index'
 import { BsList, BsX } from 'react-icons/bs'
 
 const Home = ({ component, searchBar }) => {
@@ -7,7 +7,7 @@ const Home = ({ component, searchBar }) => {
   const [sidebar, toggleSidebar] = useState(true);
 
   return (
-    <div className="flex flex-row h-screen">
+    <div className="flex flex-row h-screen max-w-screen-2xl">
       <SideBar sidebar={sidebar} />
       <div className={`${!sidebar ? 'ml-[220px] md:ml-[250px]' : ''} flex flex-col bg-gray-50 w-full h-screen overflow-y-scroll disable-scrollbar duration-500 ease-in-out`}>
         <div className={`${searchBar ? 'block' : 'hidden'}`}>

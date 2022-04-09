@@ -15,10 +15,7 @@ import {
 } from './components/index'
 import { useStateContext } from "./context";
 
-const initProfileObj = () => JSON.parse(localStorage.getItem('profileObj'));
-
 function App() {
-
   const { userGoogle: { sanityID } } = useStateContext();
 
   return (
