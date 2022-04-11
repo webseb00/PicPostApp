@@ -21,7 +21,7 @@ You may also see any lint errors in the console.
 
 CMS Sanity serves as a backend for this app. Files you can find inside studio directory.
 
-### Live Link: [https://picpostapp.netlify.app](https://picpostapp.netlify.app)
+### Live Link: [https://sharepic-app.netlify.app](https://sharepic-app.netlify.app)
 
 ### App Screens:
 
