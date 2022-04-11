@@ -2,14 +2,14 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const useAuth=()=>{
   const profile = localStorage.getItem('profileObj')
-  if(profile){ return true; } 
+  if(profile) { return true; } 
   else { return false; }
 }
 
-const ProtectedRoute = () => {
+const PublicRoute = ({ profile }) => {
   const auth = useAuth();
 
-  return auth ? <Outlet /> : <Navigate to="/login" />;
+  return auth ? <Navigate to="/" /> : <Outlet />;
 }
 
-export default ProtectedRoute
+export default PublicRoute

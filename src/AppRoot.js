@@ -1,10 +1,10 @@
-import { BrowserRouter } from "react-router-dom"
+import { HashRouter } from "react-router-dom"
 import { StateProvider } from "./context"
 import { ToastContainer } from 'react-toastify';
 
 const AppRoot = ({ children }) => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <StateProvider>
         {children}
         <ToastContainer
@@ -17,7 +17,7 @@ const AppRoot = ({ children }) => {
           theme="colored" 
         />
       </StateProvider>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

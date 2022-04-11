@@ -55,7 +55,7 @@ const Login = () => {
     <div className={`${styles.app__login} h-screen flex justify-center items-center`}>
       <div className={`${styles['app__login-wrapper']}`}>
         <video autoPlay muted loop className={`${styles['app__login-video']}`}>
-          <source src="/video/video_bg.mp4" type="video/mp4" />
+          <source src="./video/video_bg.mp4" type="video/mp4" />
         </video>
       </div>
       <div className="z-10 absolute">
